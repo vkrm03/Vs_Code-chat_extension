@@ -1,6 +1,6 @@
 const vscode = require('vscode');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
 function activate(context) {
   context.subscriptions.push(
@@ -16,7 +16,7 @@ function activate(context) {
       );
 
       const indexPath = path.join(context.extensionPath, 'out', 'index.html');
-      let html = fs.readFileSync(indexPath, 'utf-8');
+      let html = fs.readFileSync(indexPath, 'utf8');
       html = html.replace(
         /src="\//g,
         `src="${panel.webview.asWebviewUri(
@@ -25,19 +25,14 @@ function activate(context) {
       );
       panel.webview.html = html;
 
-      panel.webview.onDidReceiveMessage(
-        (message) => {
-          if (message.type === 'chat') {
-            console.log('User said:', message.text);
-            panel.webview.postMessage({
-              type: 'response',
-              text: `You said: "${message.text}"`,
-            });
-          }
-        },
-        undefined,
-        context.subscriptions
-      );
+      panel.webview.onDidReceiveMessage((msg) => {
+        if (msg.type === 'chat') {
+          panel.webview.postMessage({
+            type: 'response',
+            text: `Echo: ${msg.text}`
+          });
+        }
+      });
     })
   );
 }

@@ -1,24 +1,32 @@
 {
   "name": "chatbot-extension",
+  "displayName": "Chatbot Extension",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.80.0"
   },
-  "activationEvents": ["onCommand:chatbot.openChat"],
+  "activationEvents": [
+    "onCommand:chatbot.openChat"
+  ],
   "main": "./extension/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "chatbot.openChat",
-        "title": "Open AI Chat"
+        "title": "Open Chatbot"
       }
     ]
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build && copy dist out"
   },
   "devDependencies": {
-    "vite": "^4.5.1"
+    "vite": "^4.5.1",
+    "@vitejs/plugin-react": "^4.0.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
