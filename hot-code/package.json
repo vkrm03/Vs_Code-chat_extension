@@ -1,7 +1,7 @@
 {
   "name": "hot-code",
   "displayName": "Hot_Code",
-  "description": "VS code extension for chat based on current files code !!",
+  "description": "VS Code extension for chat based on current files code !!",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.103.0"
@@ -9,13 +9,15 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:hot-code.openChat"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "hot-code.helloWorld",
-        "title": "Hello World"
+        "command": "hot-code.openChat",
+        "title": "Open Chatbot"
       }
     ]
   },
