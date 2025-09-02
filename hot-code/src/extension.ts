@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('🔥 Chatbot VS Code extension is active!');
+	console.log('Chatbot VS Code extension is active!');
 
 	const disposable = vscode.commands.registerCommand('hot-code.openChat', () => {
 		ChatPanel.createOrShow(context.extensionUri);
