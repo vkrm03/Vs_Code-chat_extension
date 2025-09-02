@@ -3,7 +3,6 @@ import * as vscode from 'vscode';
 export function activate(context: vscode.ExtensionContext) {
 	console.log('🔥 Chatbot VS Code extension is active!');
 
-	// Register command to open chatbot
 	const disposable = vscode.commands.registerCommand('hot-code.openChat', () => {
 		ChatPanel.createOrShow(context.extensionUri);
 	});
@@ -13,9 +12,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {}
 
-/**
- * ChatPanel: Manages the webview panel for the chatbot
- */
 class ChatPanel {
 	public static currentPanel: ChatPanel | undefined;
 
@@ -27,20 +23,18 @@ class ChatPanel {
 		const column = vscode.window.activeTextEditor
 			? vscode.window.activeTextEditor.viewColumn
 			: undefined;
-
-		// If we already have a panel, reveal it
+		
 		if (ChatPanel.currentPanel) {
 			ChatPanel.currentPanel._panel.reveal(column);
 			return;
 		}
 
-		// Otherwise, create new panel
 		const panel = vscode.window.createWebviewPanel(
 			'chatbot',
 			'AI Chatbot',
 			column || vscode.ViewColumn.One,
 			{
-				enableScripts: true, // Allow JS inside the webview
+				enableScripts: true,
 			}
 		);
 
@@ -51,17 +45,14 @@ class ChatPanel {
 		this._panel = panel;
 		this._extensionUri = extensionUri;
 
-		// Set initial HTML
 		this._update();
 
-		// Handle disposal
 		this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 	}
 
 	public dispose() {
 		ChatPanel.currentPanel = undefined;
 
-		// Clean up
 		this._panel.dispose();
 
 		while (this._disposables.length) {
@@ -77,7 +68,7 @@ class ChatPanel {
 	}
 
 	private _getHtmlForWebview(): string {
-		return /* html */ `
+		return `
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
